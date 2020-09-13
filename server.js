@@ -66,9 +66,30 @@ socket.on('joinRoom',({username,room})=>{
         });
         
      }
-  });
+  })
+  
+     //socket.on('mouse',(data)=>{
+   //      console.log(data);
+    //     socket.broadcast.emit('mouse',data);
+    // });
+
+    
    
 });
+
+//////////////////////////////////////////////////////////////////
+io.sockets.on('connection',newConnection);
+
+function newConnection(socket){
+    console.log("we have anew client"+socket.id);
+    socket.on('mouse',mouseMsg);
+
+    function mouseMsg(data){
+        console.log(data);
+        socket.broadcast.emit('mouse',data);
+        
+    }
+}
 
 
 
