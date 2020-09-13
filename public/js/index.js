@@ -5,6 +5,7 @@ var socket;
 var current;
 var colornew='magenta';
 var crap;
+
 $(document).ready(function () {
     $('.nav-link').on('click', function(e) {
          current=e.currentTarget.innerHTML.split(' ')[0];
@@ -27,7 +28,25 @@ function setup() {
     socket.on('mouse',newDrawing);
   }
   
-
+function pdf(){
+  var pdf = document.getElementById("zap");
+  var zap2 = prompt("enter path");
+  pdfjsLib.getDocument(zap2).promise.then((doc)=>{
+    console.log(doc._pdfInfo.numPages);
+    doc.getPage(1).then(page=>{
+      
+      var context = pdf.getContext("2d");
+      var viewport = page.getViewport({scale:1}) 
+      pdf.height = viewport.height;
+      pdf.width = viewport.width;
+     
+      page.render({
+        canvasContext : context,
+        viewport : viewport
+      })
+    })
+  })
+}
     
   
   function newDrawing(data){
